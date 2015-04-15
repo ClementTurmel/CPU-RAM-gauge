@@ -1,10 +1,17 @@
+#*************************
+#** Name : CPU-RAM-gauge
+#** Author : Clemaul
+#** Version : 1.0
+#** date : 20150415
+#*************************
+
 import serial # for serial connection to Arduino
 import psutil # to retrieve computer information
 import time   # to delay information
 
 ser = serial.Serial()
 #ser.baudrate = 9600
-ser.baudrate = 115200
+ser.baudrate = 115200 # speed correcting synchronization problem
 ser.port = 2 # corresponding to COM3 - CHANGE IT WITH YOUR COM
 ser.open()
 
