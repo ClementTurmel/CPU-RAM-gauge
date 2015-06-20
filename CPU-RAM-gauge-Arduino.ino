@@ -39,12 +39,13 @@ int delayval = 200; // delay for half a second
     Serial.print("PROGRAM START");
     pixels.begin(); // This initializes the NeoPixel library.
     //Serial.begin(9600);
-    Serial.begin(115200);
+    Serial.begin(115200); // speed correcting synchronization problem
     pinMode(myButton, INPUT);
     pinMode(myButton, INPUT_PULLUP);
   }
 
   //affiche les le pourcentage converti en nombre de led sur le segment gauche.
+  //display percents cenvert to number of leds on the left segment.
   void printLeftSegment( int nbLed ){
     
     for(int i=0;i<nbLed ;i++){
@@ -81,7 +82,7 @@ int delayval = 200; // delay for half a second
     }
   }
 
-
+  //convert percent to number leds before sending it to coresponding segment.
   //transforme le pourcentage en nombre de led avant d'etre envoyé au segment corespondant.
   //int segment : represent the segment to show pourcentage
   //float pourcent : represent thhe pourcentage to show
@@ -151,6 +152,7 @@ int delayval = 200; // delay for half a second
 
   }
 
+  //reset all led
   //réinitialise l'ensemble des leds (OFF)
   void cleanLED()
   {
@@ -160,7 +162,8 @@ int delayval = 200; // delay for half a second
     }
   }
 
-  //Determine si l'entier ascii recu estg est nombre
+  //Define is the integer recieve is a number
+  //Determine si l'entier ascii recu est est nombre
   boolean is_a_number(int n)
   {
     return n >= 48 && n <= 57;
@@ -172,6 +175,8 @@ int delayval = 200; // delay for half a second
     return n*10 + (byte_read - 48);
   }
 
+  //Analyze recieved integer, initiate percents and chose display mode
+  //Analyse l'entier reçu, initialise les pourcentage et choisi le mode d'affichage
   void setPercents(int recieved_integer){
   
     //--------------------12345
@@ -194,6 +199,7 @@ int delayval = 200; // delay for half a second
     myButton_state = digitalRead(myButton); // LISTEN BUTTON STATE
     
     //Si le bouton a un état différent que celui enregistré ET que cet état est "appuyé"
+    //if the button have a different state that the one register and if this one is press
     if((myButton_state != myButton_memory) && (myButton_state == LOW))
     {
         mode = mode + 1;
@@ -201,6 +207,9 @@ int delayval = 200; // delay for half a second
           mode = 0;
         }
     }
+    
+    //on enregistre l'état du bouton pour le tour suivant
+    //Whe save stat for next time
     myButton_memory = myButton_state; //on enregistre l'état du bouton pour le tour suivant
     
     
